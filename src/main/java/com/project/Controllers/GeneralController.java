@@ -22,7 +22,7 @@ public class GeneralController {
 
 
     @RequestMapping (method = {RequestMethod.POST, RequestMethod.GET}, value = "/start")
-    public BaseResponseModel start (BaseResponseModel baseResponseModel) {
+    public BaseResponseModel start (BaseResponseModel baseResponseModel, String id, String name) {
         boolean error = false;
         Integer code = null;
         try {
