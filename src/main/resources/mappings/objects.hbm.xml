@@ -4,16 +4,6 @@
         "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping>
-    <class name="com.project.Objects.Entities.UserEntity" table="users" lazy="false">
-        <id name="oid" column="oid">
-            <generator class="identity"/>
-        </id>
-        <property name="username" column="username"/>
-        <property name="email" column="email"/>
-        <property name="password" column="password"/>
-        <property name="userKey" column="user_key"/>
-        <property name="activationDate" column="activation_date" type="java.util.Date"/>
-    </class>
 
 
 </hibernate-mapping>

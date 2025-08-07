@@ -1,6 +1,5 @@
 package com.project.Utils;
 
-import com.project.Objects.Entities.UserEntity;
 import jakarta.servlet.http.HttpServletRequest;
 
 import javax.crypto.spec.SecretKeySpec;
@@ -72,26 +71,6 @@ public class GeneralUtils {
         }
     }
 
-    public static String encryptUser (UserEntity userEntity) {
-        return encrypt(String.format("%s:%s:%d", userEntity.getUsername(), userEntity.getPassword(), userEntity.getOid()));
-    }
-
-    public static UserEntity decryptUser(String encryptedUser) {
-        UserEntity user = null;
-        try {
-            String decrypted = decrypt(encryptedUser);
-            String[] parts = decrypted.split(":");
-            if (parts.length == 3) {
-                user = new UserEntity();
-                user.setUsername(parts[0]);
-                user.setPassword(parts[1]);
-                user.setOid(Integer.parseInt(parts[2]));
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return user;
-    }
 
 
 

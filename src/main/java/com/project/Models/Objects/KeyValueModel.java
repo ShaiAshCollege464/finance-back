@@ -4,12 +4,12 @@ public class KeyValueModel {
     private String key;
     private String value;
 
-    public KeyValueModel(){
+    public KeyValueModel() {
     }
 
-    public KeyValueModel(Object key, Object value){
-        this.key = String.valueOf(key);
-        this.value = String.valueOf(value);
+    public KeyValueModel(String key, String value) {
+        this.key = key;
+        this.value = value;
     }
 
     public String getKey() {
@@ -26,9 +26,5 @@ public class KeyValueModel {
 
     public void setValue(String value) {
         this.value = value;
-    }
-
-    public String toString () {
-        return this.key + ":" + this.value;
     }
 }

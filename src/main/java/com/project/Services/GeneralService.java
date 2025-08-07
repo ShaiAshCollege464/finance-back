@@ -1,7 +1,6 @@
 package com.project.Services;
 
 
-import com.project.Objects.Entities.BaseEntity;
 import jakarta.transaction.Transactional;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -20,17 +19,6 @@ public class GeneralService {
         this.sessionFactory = sessionFactory;
     }
 
-    @Transactional
-    public void saveEntity(BaseEntity entity) {
-        Session session = sessionFactory.getCurrentSession();
-        session.saveOrUpdate(entity);
-    }
-
-    @Transactional
-    public <T extends BaseEntity> T getEntityByOid(Class<T> entityClass, int oid) {
-        Session session = sessionFactory.getCurrentSession();
-        return session.get(entityClass, oid);
-    }
 
     @Transactional
     public <T> List<T> getList(Class<T> clazz) {

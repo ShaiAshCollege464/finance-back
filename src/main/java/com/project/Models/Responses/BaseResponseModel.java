@@ -1,7 +1,7 @@
 package com.project.Models.Responses;
 
-import com.project.Objects.Entities.UserEntity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.project.Objects.Entities.UserEntity;
 
 import java.util.Map;
 
