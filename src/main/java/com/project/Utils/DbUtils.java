@@ -1,8 +1,6 @@
 package com.project.Utils;
 
-import com.project.Objects.Entities.AnswerEntity;
-import com.project.Objects.Entities.QuestionEntity;
-import com.project.Objects.Entities.UserEntity;
+import com.project.Objects.Entities.*;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -89,6 +87,84 @@ public class DbUtils {
             return -1;
         }
     }
+
+    public List<Transaction> getAllTransactions() {
+        List<Transaction> transactions = new ArrayList<>();
+        String sql = "SELECT * FROM transactions";
+        try (PreparedStatement stmt = connection.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+            while (rs.next()) {
+                Transaction transaction = new Transaction();
+                transaction.setId(rs.getInt("id"));
+                transaction.setUserId(rs.getInt("userId"));
+                transaction.setReportType(rs.getString("reportType"));
+                transaction.setAmount(rs.getDouble("amount"));
+                transaction.setCreatedAt(rs.getString("createdAt"));
+                transactions.add(transaction);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return transactions;
+    }
+    public List<Report> getAllReports() {
+        List<Report> reports = new ArrayList<>();
+        String sql = "SELECT * FROM reports";
+        try (PreparedStatement stmt = connection.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+            while (rs.next()) {
+                Report report = new Report();
+                report.setReportId(rs.getInt("id"));
+                report.setUserId(rs.getInt("userId"));
+                report.setReportType(rs.getString("reportType"));
+                report.setCreationDate(rs.getString("createdAt"));
+                reports.add(report);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return reports;
+
+    }
+    public List<InvestmentProfile> getAllInvestmentProfiles() {
+        List<InvestmentProfile> investmentProfiles = new ArrayList<>();
+        String sql = "SELECT * FROM investment_profiles";
+        try (PreparedStatement stmt = connection.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+            while (rs.next()) {
+                InvestmentProfile investmentProfile = new InvestmentProfile();
+                investmentProfile.setUserId(rs.getInt("userId"));
+                investmentProfile.setRiskLevel(rs.getInt("riskLevel"));
+                investmentProfile.setAge(rs.getInt("age"));
+                investmentProfile.setIncome(rs.getInt("income"));
+                investmentProfiles.add(investmentProfile);
+            }
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+        return investmentProfiles;
+    }
+
+    public List<InvestmentPlan> getAllInvestmentPlans() {
+        List<InvestmentPlan> investmentPlans = new ArrayList<>();
+        String sql = "SELECT * FROM investment_plans";
+        try (PreparedStatement stmt = connection.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()){
+            while (rs.next()){
+                InvestmentPlan investmentPlan = new InvestmentPlan();
+                investmentPlan.setId(rs.getInt("Id"));
+                investmentPlan.setUserId(rs.getInt("userId"));
+                investmentPlan.setAmount(rs.getInt("amount"));
+                investmentPlan.setPlanId(rs.getInt("planId"));
+                investmentPlans.add(investmentPlan);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return investmentPlans;
+
+    }
+
 
 
 }
