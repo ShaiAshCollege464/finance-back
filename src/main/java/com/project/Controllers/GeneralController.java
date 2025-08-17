@@ -25,6 +25,8 @@ import static com.project.Utils.ErrorCodes.ERROR_CODE_GENERAL;
 public class GeneralController {
 
 
+
+
     @Autowired
     private GeneralService generalService;
 
