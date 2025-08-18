@@ -13,7 +13,7 @@ public class DbUtils {
 
     private static final String USER = "root";
     private static final String PASSWORD = "1234";
-    private static final String SCHEMA_NAME = "project";
+    private static final String SCHEMA_NAME = "finance_project";
     private static final String URL = "jdbc:mysql://localhost:3306/" + SCHEMA_NAME + "?useSSL=false&serverTimezone=UTC";
 
     private Connection connection;
