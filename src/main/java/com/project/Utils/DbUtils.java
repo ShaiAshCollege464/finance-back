@@ -165,6 +165,33 @@ public class DbUtils {
 
     }
 
+    public int insertAnswer(int userId, String key, String value) {
+        String sql = "INSERT INTO answers (userId, `key`, `value`) VALUES (?, ?, ?)";
+        try (PreparedStatement stmt = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+            stmt.setInt(1, userId);
+            stmt.setString(2, key);
+            stmt.setString(3, value);
+
+            int affectedRows = stmt.executeUpdate();
+
+            if (affectedRows == 0) {
+                throw new SQLException("Inserting answer failed, no rows affected.");
+            }
+
+            try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    return generatedKeys.getInt(1); // return the generated id
+                } else {
+                    throw new SQLException("Inserting answer failed, no ID obtained.");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return -1;
+        }
+    }
+
+
 
 
 }

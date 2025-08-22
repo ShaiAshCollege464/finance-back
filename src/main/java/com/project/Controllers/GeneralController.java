@@ -25,10 +25,6 @@ import static com.project.Utils.ErrorCodes.ERROR_CODE_GENERAL;
 public class GeneralController {
 
 
-
-
-
-
     @Autowired
     private GeneralService generalService;
 
@@ -38,8 +34,8 @@ public class GeneralController {
     public static final CustomLogger LOGGER = new CustomLogger(GeneralController.class);
 
 
-    @RequestMapping (method = {RequestMethod.POST, RequestMethod.GET}, value = "/start")
-    public BaseResponseModel start (BaseResponseModel baseResponseModel, String id, String name) {
+    @RequestMapping(method = {RequestMethod.POST, RequestMethod.GET}, value = "/start")
+    public BaseResponseModel start(BaseResponseModel baseResponseModel, String id, String name) {
         boolean error = false;
         Integer code = null;
         try {
@@ -56,8 +52,8 @@ public class GeneralController {
     }
 
 
-    @RequestMapping (method = {RequestMethod.POST, RequestMethod.GET}, value = "/add-user")
-    public BaseResponseModel addUser (BaseResponseModel baseResponseModel, String phone, String name) {
+    @RequestMapping(method = {RequestMethod.POST, RequestMethod.GET}, value = "/add-user")
+    public BaseResponseModel addUser(BaseResponseModel baseResponseModel, String phone, String name) {
         boolean error = false;
         Integer code = null;
         try {
@@ -75,9 +71,8 @@ public class GeneralController {
     }
 
 
-
-    @RequestMapping (method = {RequestMethod.POST, RequestMethod.GET}, value = "/questions")
-    public BaseResponseModel questions (BaseResponseModel baseResponseModel) {
+    @RequestMapping(method = {RequestMethod.POST, RequestMethod.GET}, value = "/questions")
+    public BaseResponseModel questions(BaseResponseModel baseResponseModel) {
         boolean error = false;
         Integer code = null;
         try {
@@ -93,27 +88,36 @@ public class GeneralController {
         return baseResponseModel;
     }
 
-    @RequestMapping (method = {RequestMethod.POST, RequestMethod.GET}, value = "/submit")
-    public BaseResponseModel submit (BaseResponseModel baseResponseModel, String data, int userId) {
+    @RequestMapping(method = {RequestMethod.POST}, value = "/submit")
+    public BaseResponseModel submit(
+            @RequestBody String body,          // <-- raw body here
+            @RequestParam int userId           // <-- userId as query param
+    ) {
         boolean error = false;
         Integer code = null;
+        BaseResponseModel baseResponseModel = new BaseResponseModel();
+
         try {
             ObjectMapper objectMapper = new ObjectMapper();
-            Map<String, String> map = objectMapper.readValue(data, Map.class);
-            for (Map.Entry<String, String> entry : map.entrySet()) {
-                AnswerEntity answerEntity = new AnswerEntity(userId, Integer.valueOf(entry.getKey()), entry.getValue());
-                dbUtils.insertAnswer(answerEntity);
+            Map<String, Object> map = objectMapper.readValue(body, Map.class);
+            for (Map.Entry<String, Object> entry : map.entrySet()) {
+
+                AnswerEntity answerEntity = new AnswerEntity(
+                        userId,
+                        Integer.valueOf(entry.getKey()),
+                        entry.getValue().toString()
+                );
+                dbUtils.insertAnswer(userId, entry.getKey(), entry.getValue().toString());
             }
         } catch (Exception e) {
-            LOGGER.log(e, "submit {}", e);
             code = ERROR_CODE_GENERAL;
             error = true;
         }
+
         baseResponseModel.setError(error);
         baseResponseModel.setCode(code);
         return baseResponseModel;
     }
-
 
 
 }
